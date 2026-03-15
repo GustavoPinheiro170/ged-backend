@@ -27,21 +27,15 @@ public class UserService {
     }
 
     public String login(UserRequest request) {
-        try {
                 Optional<User> user = userRepository.findByUsername(request.login());
                 if (user.get().getUsername().equals(request.login()) && user.get().getPassword().equals(request.password())) {
-                    return jwtService.gerarToken(request.login());
+                    return jwtService.gerarToken(request.login(), user.get().getProfile());
                 }
                 throw new RuntimeException("Usuário ou senha inválidos");
-            }catch (Exception exception){
-                throw new RuntimeException(exception.getMessage());
-            }
         }
 
     public ResponseEntity<HttpStatus> createUser(CreateUserRequest createUserRequest) {
-
         User user = mapper.toUser(createUserRequest);
-
         if(userRepository.findByUsername(createUserRequest.username()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }else {

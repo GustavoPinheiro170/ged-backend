@@ -6,11 +6,15 @@ import br.com.ged.services.DocumentFileService;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
@@ -38,20 +42,18 @@ public class DocumentUploadController {
 
     }
 
+    @PutMapping("/{id}/update/archive")
+    public ResponseEntity<?> updateDocumentArchive(
+            @PathVariable Long id,
+            @RequestParam MultipartFile file,
+            Principal principal) throws IOException {
+        service.updateArchive(id, file, principal.getName());
+        return ResponseEntity.ok("Arquivo Atualizado");
+
+    }
+
     @GetMapping("/{id}/download")
-    public ResponseEntity<Resource> download(@PathVariable Long id) throws IOException {
-
-        DocumentVersion version =
-                documentVersionRepository.findTopByDocumentIdOrderByUploadedAtDesc(id)
-                        .orElseThrow();
-
-        Path path = Paths.get("storage/" + version.getFileKey());
-
-        Resource resource = new UrlResource(path.toUri());
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=" + version.getFileKey())
-                .body(resource);
+    public ResponseEntity<?> download(@PathVariable Long id) throws Exception {
+        return  service.downloadArchive(id);
     }
 }

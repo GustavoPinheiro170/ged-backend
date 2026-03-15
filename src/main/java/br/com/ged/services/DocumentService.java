@@ -21,7 +21,6 @@ public class DocumentService {
     public Document create(Document document) {
         document.setCreatedAt(LocalDateTime.now());
         document.setUpdatedAt(LocalDateTime.now());
-        document.setStatus(DocumentStatus.DRAFT);
 
         return documentRepository.save(document);
     }
@@ -31,6 +30,7 @@ public class DocumentService {
         Document doc = documentRepository.findById(id)
                 .orElseThrow();
 
+        doc.setStatus(request.getStatus());
         doc.setTitle(request.getTitle());
         doc.setDescription(request.getDescription());
         doc.setTags(request.getTags());

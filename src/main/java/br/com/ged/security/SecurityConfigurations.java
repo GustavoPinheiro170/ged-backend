@@ -38,6 +38,10 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/documents").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/documents/**").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/documents/*/update/archive").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/documents/detail/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+                        .requestMatchers(HttpMethod.GET, "/documents/*/download").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
                         .requestMatchers(HttpMethod.POST, "/documents/*/upload").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.GET, "/documents").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
 

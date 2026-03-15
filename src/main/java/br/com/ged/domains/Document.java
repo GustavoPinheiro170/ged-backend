@@ -25,7 +25,7 @@ public class Document {
     private String owner;
 
     @Enumerated(EnumType.STRING)
-    private DocumentStatus status = DocumentStatus.DRAFT;
+    private DocumentStatus status;
 
     private LocalDateTime createdAt;
 

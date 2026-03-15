@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/documents")
 public class DocumentController {
@@ -42,6 +44,12 @@ public class DocumentController {
         return documentService.changeStatus(id, status);
     }
 
+    @GetMapping("/detail")
+    public Optional<Document> getDocumentById(@RequestParam Long id) {
+            return documentRepository.findById(id);
+    }
+
+
     @GetMapping
     public Page<Document> getDocuments(
             @RequestParam(required = false) String title,
@@ -49,16 +57,12 @@ public class DocumentController {
             Pageable pageable
     ) {
 
-        if (title != null && status != null) {
-            return documentRepository.findByTitleContainingIgnoreCaseAndStatus(title, status, pageable);
-        } else if (title != null) {
-            return documentRepository.findByTitleContainingIgnoreCase(title, pageable);
-        } else if (status != null) {
-            return documentRepository.findByStatus(status, pageable);
-        } else {
+        if (title != null || status != null) {
+            return documentRepository.findByFilters(title, status != null ? status.name() : null, pageable);
+        }else {
             return documentRepository.findAll(pageable);
         }
-    }
+        }
 
 
 }
