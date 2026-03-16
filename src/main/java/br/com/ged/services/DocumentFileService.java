@@ -43,7 +43,14 @@ public class DocumentFileService {
 
             String fileKey = UUID.randomUUID() + "_" + file.getOriginalFilename();
 
+            if (!Files.exists(Paths.get("storage"))) {
+                Files.createDirectories(Paths.get("storage"));
+            }
+
             Path path = Paths.get("storage/" + fileKey);
+
+
+
 
             Files.write(path, file.getBytes());
 
