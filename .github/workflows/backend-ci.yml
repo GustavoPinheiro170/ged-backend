@@ -51,10 +51,10 @@ jobs:
           SPRING_DATASOURCE_PASSWORD: admin
 
       - name: Build project
-        run: mvn clean package -DskipTests -Dspring.profiles.active=dev
+        run: mvn clean package -DskipTests
 
       - name: Run tests
-        run: mvn test
+        run: mvn test -Dspring.profiles.active=dev
 
       - name: Build Docker image
         run: docker build -t ged-backend .
