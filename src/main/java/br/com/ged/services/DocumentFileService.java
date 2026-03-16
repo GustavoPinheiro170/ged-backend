@@ -71,7 +71,6 @@ public class DocumentFileService {
         Optional<DocumentVersion> version = versionRepository.findById(doc.getId());
 
         if(version.isPresent()) {
-        System.out.println(version.get());
             version.get().setDocument(doc);
             version.get().setFileKey(fileKey);
             version.get().setUploadedAt(LocalDateTime.now());
