@@ -3,15 +3,14 @@ name: Backend CI
 on:
 push:
 branches:
-  - master
+  - main
   - develop
 
 pull_request:
-branches:
-  - master
+  branches:
+    - main
 
 jobs:
-
 build:
 
   ```
@@ -25,15 +24,15 @@ steps:
   - name: Setup Java
     uses: actions/setup-java@v4
     with:
-      distribution: temurin
-      java-version: 17
+      distribution: 'temurin'
+      java-version: '17'
 
-  - name: Build with Maven
+  - name: Build project
     run: mvn clean package
 
-  - name: Run Tests
+  - name: Run tests
     run: mvn test
 
-  - name: Build Docker Image
+  - name: Build Docker image
     run: docker build -t ged-backend .
-  ```
+
