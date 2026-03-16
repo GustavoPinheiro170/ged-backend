@@ -10,26 +10,26 @@ on:
     branches:
       - main
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+  jobs:
+    build:
+      runs-on: ubuntu-latest
 
-steps:
-  - name: Checkout repository
-    uses: actions/checkout@v4
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-  - name: Setup Java
-    uses: actions/setup-java@v4
-    with:
-      distribution: 'temurin'
-      java-version: '17'
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
 
-  - name: Build project
-    run: mvn clean package
+    - name: Build project
+      run: mvn clean package
 
-  - name: Run tests
-    run: mvn test
+    - name: Run tests
+      run: mvn test
 
-  - name: Build Docker image
-    run: docker build -t ged-backend .
+    - name: Build Docker image
+      run: docker build -t ged-backend .
 
