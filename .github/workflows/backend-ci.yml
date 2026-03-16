@@ -51,7 +51,7 @@ jobs:
           SPRING_DATASOURCE_PASSWORD: admin
 
       - name: Build project
-        run: mvn clean package -DskipTests
+        run: mvn clean package -DskipTests -Dspring.profiles.active=dev
 
       - name: Run tests
         run: mvn test
