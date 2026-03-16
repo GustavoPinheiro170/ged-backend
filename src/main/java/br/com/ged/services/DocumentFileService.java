@@ -43,10 +43,12 @@ public class DocumentFileService {
 
             String fileKey = UUID.randomUUID() + "_" + file.getOriginalFilename();
 
-            if (!Files.exists(Paths.get("storage"))) {
-                Files.createDirectories(Paths.get("storage"));
-            }
 
+            Path storage = Paths.get("storage");
+
+            if (!Files.exists(storage)) {
+                Files.createDirectories(storage);
+            }
             Path path = Paths.get("storage/" + fileKey);
 
 
@@ -71,6 +73,12 @@ public class DocumentFileService {
                 .orElseThrow();
 
         String fileKey = UUID.randomUUID() + "_" + file.getOriginalFilename();
+
+        Path storage = Paths.get("storage");
+
+        if (!Files.exists(storage)) {
+            Files.createDirectories(storage);
+        }
 
         Path path = Paths.get("storage/" + fileKey);
         Files.write(path, file.getBytes());
