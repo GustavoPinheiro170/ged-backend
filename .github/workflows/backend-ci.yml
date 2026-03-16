@@ -3,33 +3,34 @@ name: Backend CI
 on:
   push:
     branches:
-      - main
+      - master
       - develop
 
   pull_request:
     branches:
-      - main
+      - master
 
-  jobs:
-    build:
-      runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-  steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    steps:
 
-    - name: Setup Java
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'temurin'
-        java-version: '17'
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Build project
-      run: mvn clean package
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
-    - name: Run tests
-      run: mvn test
+      - name: Build project
+        run: mvn clean package
 
-    - name: Build Docker image
-      run: docker build -t ged-backend .
+      - name: Run tests
+        run: mvn test
+
+      - name: Build Docker image
+        run: docker build -t ged-backend .
 
